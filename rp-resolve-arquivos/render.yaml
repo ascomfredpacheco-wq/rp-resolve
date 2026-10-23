@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: rp-resolve
+    env: node
+    plan: free
+    buildCommand: ""
+    startCommand: "node src/server.js"
+    envVars:
+      - key: NODE_VERSION
+        value: 20.10.0

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RP RESOLVE — Monitoramento Ao Vivo, Reels em Alta & IA</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- HEADER MINIMALISTA & AÇÃO RÁPIDA -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo">RP</div>
+        <div>
+          <div class="brand-title-row">
+            <h1>RP RESOLVE</h1>
+            <span class="live-status-badge" id="liveStatusIndicator">
+              <span class="pulse-dot"></span> Redes Ao Vivo
+            </span>
+          </div>
+          <p class="brand-subtitle">Monitoramento em Tempo Real • Reels em Alta • IA Universal</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- BOTÃO DE ATUALIZAÇÃO EM TEMPO REAL -->
+        <button type="button" id="liveSyncBtn" class="btn-action-primary" title="Buscar atualizações das redes em tempo real">
+          🔄 Atualizar Redes Ao Vivo
+        </button>
+
+        <!-- LINK PÚBLICO ENXUTO -->
+        <div class="share-compact">
+          <input id="publicShareInput" type="text" readonly value="Carregando link..." />
+          <button type="button" id="copyShareLinkBtn" class="btn-action-subtle" title="Copiar link público">📋 Copiar</button>
+          <a id="whatsappShareBtn" href="#" target="_blank" rel="noopener" class="btn-action-wa" title="Compartilhar no WhatsApp">📲 WhatsApp</a>
+        </div>
+
+        <button type="button" id="themeToggleBtn" class="btn-icon-toggle" title="Alternar Modo Escuro / Claro">🌓</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <!-- BARRA DE ENTRADA RÁPIDA E DIRETA (SEM ENROLAÇÃO) -->
+    <section class="command-bar-card">
+      <form id="quickAnalyzeForm" class="command-form">
+        <div class="command-inputs">
+          <div class="field-item">
+            <label for="userHandleInput">Seu @ no Instagram</label>
+            <input id="userHandleInput" type="text" placeholder="@seu_perfil" required />
+          </div>
+          <div class="field-item">
+            <label for="addCompetitorInput">Adicionar @ Concorrente</label>
+            <div class="add-box">
+              <input id="addCompetitorInput" type="text" placeholder="@exemplo" />
+              <button type="button" id="addCompetitorBtn" class="btn-small-add">+ Add</button>
+            </div>
+          </div>
+          <div class="field-item">
+            <label for="nicheSelect">Nicho</label>
+            <select id="nicheSelect"></select>
+          </div>
+          <div class="field-item" style="display:none;">
+            <input id="customTopicInput" type="text" />
+            <select id="aiEngineSelect"></select>
+          </div>
+        </div>
+
+        <!-- CHIPS DE CONCORRENTES MONITORADOS -->
+        <div class="pipeline-row">
+          <span class="pipeline-label">Perfis no Radar:</span>
+          <div id="listedProfilesChips" class="pipeline-chips"></div>
+          <button type="button" id="loadNicheSuggestionsBtn" class="btn-text">+ Sugerir Líderes</button>
+          <button type="button" id="clearCompetitorsBtn" class="btn-text text-danger">Limpar</button>
+        </div>
+
+        <button type="submit" id="analyzeBtn" class="btn-main-action">
+          ⚡ Sincronizar Dados & Gerar Roteiros Agora
+        </button>
+      </form>
+    </section>
+
+    <!-- OS 3 PILARES CENTRAIS (NAVEGAÇÃO SIMPLIFICADA) -->
+    <nav class="main-tabs-nav" aria-label="Abas Principais">
+      <button class="nav-tab active" data-tab="tab-live">
+        📡 1. Redes Ao Vivo & Reels em Alta
+      </button>
+      <button class="nav-tab" data-tab="tab-scripts">
+        🎬 2. Roteiros de Ação Rápida
+      </button>
+      <button class="nav-tab" data-tab="tab-chat">
+        🧠 3. IA Robusta (Qualquer Pergunta)
+      </button>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- PILAR 1: REDES AO VIVO & REELS EM ALTA (MINI JANELA) -->
+    <!-- ========================================== -->
+    <main id="tab-live" class="tab-content active">
+      <!-- FAIXA DE KPIS EM TEMPO REAL -->
+      <div id="summaryStrip" class="kpi-strip"></div>
+
+      <!-- SEÇÃO REELS EM ALTA COM MINI JANELA CLICÁVEL -->
+      <section class="action-card">
+        <div class="card-title-row">
+          <div>
+            <h2>🔥 Reels em Alta do Momento (Clique para Assistir na Mini Janela)</h2>
+            <p>Vídeos 100% verificados que furaram a bolha recentemente com links diretos clicáveis:</p>
+          </div>
+          <span class="live-pill">🔴 Ao Vivo</span>
+        </div>
+
+        <!-- FORMULÁRIO PARA ADICIONAR QUALQUER REEL REAL DIRETAMENTE -->
+        <form id="addCustomReelForm" class="custom-reel-form" style="display:flex; gap:0.5rem; margin:0.8rem 0 1.2rem; flex-wrap:wrap;">
+          <input id="customReelUrlInput" type="url" placeholder="Cole qualquer link de Reel ou Post real (ex: https://www.instagram.com/p/De1fO-zMoF-/)..." required style="flex:1; min-width:260px; padding:0.6rem 0.85rem; border-radius:8px; border:1px solid var(--border); background:rgba(0,0,0,0.25); color:var(--text-main); font-size:0.82rem;" />
+          <button type="submit" class="btn-action-primary" style="white-space:nowrap; padding:0.6rem 1.1rem; font-weight:700;">
+            ➕ Inserir Reel Real
+          </button>
+        </form>
+
+        <!-- GRID DE VÍDEOS COM MINI PLAYER CLICÁVEL -->
+        <div id="trendingReelsGrid" class="reels-grid"></div>
+      </section>
+
+      <!-- TABELA DE TELEMETRIA AO VIVO DOS PERFIS -->
+      <section class="action-card">
+        <div class="card-title-row">
+          <h3>📊 Telemetria dos Perfis Monitorados</h3>
+          <span id="lastSyncLabel" class="time-label">Sincronizado agora</span>
+        </div>
+        <div class="table-container">
+          <table id="profilesLiveTable">
+            <thead>
+              <tr>
+                <th>Perfil</th>
+                <th>Mediana Habitual</th>
+                <th>Pico Viral</th>
+                <th>Frequência</th>
+                <th>Gancho Campeão</th>
+                <th>Instagram</th>
+              </tr>
+            </thead>
+            <tbody id="profilesLiveTbody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- ========================================== -->
+    <!-- PILAR 2: ROTEIROS DE AÇÃO RÁPIDA -->
+    <!-- ========================================== -->
+    <section id="tab-scripts" class="tab-content">
+      <div id="scriptsContainer"></div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- PILAR 3: IA ROBUSTA (QUALQUER PERGUNTA) -->
+    <!-- ========================================== -->
+    <section id="tab-chat" class="tab-content">
+      <div class="chat-wrapper">
+        <div class="chat-header-bar">
+          <div>
+            <strong>🧠 IA Robusta Universal</strong>
+            <p>Pergunte sobre <strong>qualquer assunto do mundo</strong> (finanças, negócios, programação, matemática, ciência) ou sobre <strong>seu Instagram</strong>.</p>
+          </div>
+          <button type="button" id="clearChatBtn" class="btn-text">🗑️ Limpar Chat</button>
+        </div>
+
+        <div class="quick-prompts">
+          <button type="button" class="prompt-chip" data-prompt="Quais são as 3 ações mais urgentes para aumentar as visualizações do meu perfil?">⚡ 3 Ações para Meu Perfil</button>
+          <button type="button" class="prompt-chip" data-prompt="Me dê 3 opções de Bio fortes para o meu Instagram">✨ Criar Nova Bio</button>
+          <button type="button" class="prompt-chip" data-prompt="Como funciona juros compostos e como calcular o retorno de um investimento?">💰 Finanças & Investimentos</button>
+          <button type="button" class="prompt-chip" data-prompt="Como estruturar um funil de vendas corporativo de alta conversão?">🏢 Funil de Vendas B2B</button>
+          <button type="button" class="prompt-chip" data-prompt="Escreva um código em Python para automatizar uma tarefa simples">💻 Exemplo em Python</button>
+        </div>
+
+        <div id="chatMessages" class="chat-stream"></div>
+
+        <form id="chatForm" class="chat-bar">
+          <input id="chatInput" type="text" placeholder="Pergunte qualquer coisa ao assistente (qualquer assunto do mundo ou do seu perfil)..." required />
+          <button type="submit" class="btn-send-chat">Enviar</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MINI JANELA CLICÁVEL DO REEL (PLAYER FLUTUANTE PIP MODAL) -->
+  <!-- ======================================================== -->
+  <div id="miniPlayerModal" class="mini-player-overlay hidden" aria-modal="true" role="dialog">
+    <div class="mini-player-window">
+      <div class="mini-player-top">
+        <div class="mini-player-creator">
+          <span class="live-dot-red"></span>
+          <strong id="miniPlayerHandle">@perfil</strong>
+          <span id="miniPlayerBadge" class="mini-mult-badge">9.8x Viral</span>
+        </div>
+        <button type="button" id="closeMiniPlayerBtn" class="btn-close-mini" title="Fechar janela">✕</button>
+      </div>
+
+      <!-- MOCKUP DO PLAYER INTERATIVO DO REEL / EMBED -->
+      <div class="mini-video-frame">
+        <iframe id="miniPlayerIframe" class="mini-embed-frame hidden" src="" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+        
+        <div id="miniPlayerMockup" class="mini-mockup-layer">
+          <div class="video-overlay-header">
+            <span id="miniPlayerViews">👁️ 50.000 visualizações</span>
+            <span id="miniPlayerDuration">0:38</span>
+          </div>
+
+          <div class="video-center-art">
+            <a id="miniPlayerCenterPlayLink" href="#" target="_blank" rel="noopener" class="play-circle-btn" title="Reproduzir vídeo no Instagram">▶</a>
+            <span style="font-size:0.75rem; color:#fff; font-weight:700; margin-top:0.4rem; text-shadow:0 2px 4px rgba(0,0,0,0.8);">Clique para Assistir no Instagram</span>
+          </div>
+
+          <!-- TARJA DE TÍTULO / GANCHO VISUAL DO VÍDEO -->
+          <div class="video-caption-overlay">
+            <div class="on-screen-tag" id="miniPlayerTag">MANCHETE DO VÍDEO</div>
+            <p id="miniPlayerHook" class="hook-quote">"Olha na tela o que está acontecendo agora..."</p>
+          </div>
+
+          <!-- BARRA DE PROGRESSO DO VÍDEO -->
+          <div class="video-progress-bar">
+            <div class="video-progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LINK DIRETO DO POST EXIBIDO COM CLAREZA -->
+      <div class="mini-direct-link-bar">
+        <span>Link do Vídeo:</span>
+        <a id="miniPlayerUrlDisplay" href="#" target="_blank" rel="noopener" style="color:#38bdf8; font-family:monospace; font-size:0.78rem; text-decoration:underline; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;">
+          https://www.instagram.com/reel/De1fO-zMoF-/
+        </a>
+        <button type="button" id="miniPlayerCopyUrlBtn" class="btn-action-subtle" style="padding:0.25rem 0.6rem; font-size:0.72rem;">
+          📋 Copiar
+        </button>
+      </div>
+
+      <!-- AÇÕES DIRETAS DO REEL -->
+      <div class="mini-player-actions" style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+        <a id="miniPlayerExternalLink" href="#" target="_blank" rel="noopener" class="btn-action-primary" style="flex:1; min-width:180px; text-align:center; text-decoration:none; font-weight:800; font-size:0.82rem; padding:0.6rem 0.8rem;">
+          ▶️ Assistir no Instagram ↗
+        </a>
+        <button type="button" id="miniPlayerCopyHookBtn" class="btn-action-subtle" style="font-size:0.76rem;">
+          📋 Gancho
+        </button>
+        <button type="button" id="miniPlayerToggleEmbedBtn" class="btn-action-subtle" style="font-size:0.76rem;">
+          🔁 Embed
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL TELEPROMPTER -->
+  <div id="teleprompterModal" class="teleprompter-modal hidden">
+    <div class="teleprompter-box">
+      <div class="teleprompter-header">
+        <strong>🎙️ Modo Teleprompter</strong>
+        <div class="teleprompter-controls">
+          <button type="button" id="tpAutoScrollBtn" class="btn-action-primary">▶️ Rolagem</button>
+          <button type="button" id="tpFontPlusBtn" class="btn-action-subtle">A+</button>
+          <button type="button" id="tpFontMinusBtn" class="btn-action-subtle">A-</button>
+          <button type="button" id="tpCloseBtn" class="btn-close-mini">✕</button>
+        </div>
+      </div>
+      <div id="teleprompterContent" class="teleprompter-content"></div>
+    </div>
+  </div>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

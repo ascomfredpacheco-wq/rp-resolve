@@ -1,0 +1,14 @@
+{
+  "name": "rp-resolve-instagram",
+  "version": "1.0.0",
+  "description": "RP RESOLVE — Monitoramento Ao Vivo, Reels em Alta & IA",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
